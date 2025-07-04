@@ -1,0 +1,106 @@
+/* Error Container */
+.errorContainer {
+  padding: 2rem 1rem;
+  background-color: var(--background-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inner Container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Content Box */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+/* Alert */
+.errorAlert {
+  width: 100%;
+  border-radius: var(--input-border-radius);
+  background-color: #fff;
+  color: var(--error-color);
+}
+
+/* Alert Title */
+.alertTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--error-color);
+}
+
+/* Error Message */
+.errorMessage {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+/* Error Details (Development) */
+.errorDetails {
+  color: var(--text-color);
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  margin-top: 0.5rem;
+}
+
+/* Home Button */
+.homeButton {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.homeButton:hover {
+  background-color: var(--button-hover-bg) !important;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .errorContainer {
+    padding: 3rem 1.5rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  .content {
+    padding: 3rem 0;
+  }
+
+  .errorAlert {
+    padding: 1.5rem;
+  }
+
+  .alertTitle {
+    font-size: 1.5rem;
+  }
+
+  .errorMessage {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .alertTitle {
+    font-size: 1.75rem;
+  }
+}

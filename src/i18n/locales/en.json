@@ -1,0 +1,160 @@
+{
+  "header": {
+    "home": "Home",
+    "products": "Products",
+    "orders": "Orders",
+    "contact": "Contact",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout",
+    "searchPlaceholder": "Search products...",
+    "searchAria": "Search products",
+    "search": "Search",
+    "cartAria": "Cart with {count} items",
+    "lightMode": "Switch to light mode",
+    "darkMode": "Switch to dark mode",
+    "menu": "Menu",
+    "language": "Change language",
+    "selectLanguage": "Select Language",
+    "avatarError": "Image failed to load"
+  },
+  "products": {
+    "title": "Featured Products",
+    "description": "Explore our wide range of wholesale products tailored for your business needs.",
+    "keywords": "wholesale, products, electronics, clothing, furniture, books, accessories",
+    "ariaLabel": "Products page",
+    "breadcrumbAria": "Breadcrumb navigation",
+    "categoryAria": "Product category filter tabs",
+    "home": "Home",
+    "search": "Search Products",
+    "searchAria": "Search for products by name",
+    "category": "Category",
+    "sortBy": "Sort By",
+    "priceRange": "Price Range",
+    "minRating": "Minimum Rating",
+    "stars": "Stars",
+    "loading": "Loading products",
+    "noProducts": "No products found matching your criteria.",
+    "pagination": "Product pagination",
+    "addedToCart": "Added {name} to cart!",
+    "error": {
+      "noProductContext": "Product context is not available.",
+      "urlParams": "Error loading search parameters.",
+      "addToCart": "Failed to add product to cart."
+    },
+    "categories": {
+      "all": "All",
+      "electronics": "Electronics",
+      "clothing": "Clothing",
+      "furniture": "Furniture",
+      "books": "Books",
+      "accessories": "Accessories"
+    },
+    "sortOptions": {
+      "default": "Default",
+      "price-asc": "Price: Low to High",
+      "price-desc": "Price: High to Low",
+      "rating-desc": "Rating: High to Low",
+      "name-asc": "Name: A-Z"
+    }
+  },
+  "product": {
+    "home": "Home",
+    "products": "Products",
+    "notFound": "Product not found",
+    "loading": "Loading product details",
+    "ariaLabel": "Details for {name}",
+    "breadcrumbAria": "Breadcrumb navigation",
+    "noDescription": "No description available.",
+    "imageError": "Product image failed to load",
+    "category": "Category",
+    "new": "New",
+    "onSale": "On Sale",
+    "inStock": "In Stock ({count})",
+    "outOfStock": "Out of Stock",
+    "bulkPricing": "Bulk Pricing",
+    "bulkPrice": "From {price}",
+    "bulkPricingTier": "{minQuantity}+ units: {price} each",
+    "bulkAvailable": "Bulk Pricing Available",
+    "bulkAvailableAria": "Bulk pricing available for this product",
+    "variants": "Variants",
+    "unknownVariant": "Unknown Variant",
+    "variantSelected": "Selected variant: {variant}",
+    "quantity": "Quantity",
+    "quantityAria": "Select quantity for {name}",
+    "addToCart": "Add to Cart",
+    "addToCartAria": "Add {quantity} {name} to cart",
+    "viewDetails": "View Details",
+    "viewDetailsAria": "View details for {name}",
+    "prevImage": "Previous image",
+    "nextImage": "Next image",
+    "thumbnailAria": "Thumbnail {index} of {name}",
+    "selectThumbnail": "Select thumbnail {index}",
+    "ratingAria": "{rating} star rating",
+    "reviews": "Reviews",
+    "relatedProducts": "Related Products",
+    "addedToCart": "Added {quantity} {name} to cart",
+    "addedToWishlist": "Added to wishlist",
+    "removeFromWishlist": "Remove from wishlist",
+    "removedFromWishlist": "Removed from wishlist"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "johnDoe": "Amazing deals and fast delivery! Wholesale Market has transformed my business.",
+    "janeSmith": "The quality of products is outstanding, and the customer service is top-notch!",
+    "mikeJohnson": "I love the variety of products available. It’s a one-stop shop for all my needs.",
+    "avatarError": "Image failed to load"
+  },
+  "app": {
+    "title": "Wholesale Market - Best Deals Online",
+    "description": "Your one-stop shop for wholesale products with unbeatable prices.",
+    "loading": "Loading application"
+  },
+  "auth": {
+    "loggedIn": "Successfully logged in",
+    "loggedOut": "Successfully logged out"
+  },
+  "wishlist": {
+    "added": "Added to wishlist",
+    "removed": "Removed from wishlist"
+  },
+  "layout": {
+    "mainContent": "Main content",
+    "scrollToTop": "Scroll to top"
+  },
+  "login": {
+    "title": "Login",
+    "prompt": "Sign in to access your account and manage your orders.",
+    "alreadyLoggedIn": "You are already logged in.",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "profile": {
+    "title": "Your Profile",
+    "description": "Manage your account details and preferences.",
+    "placeholder": "Profile management coming soon."
+  },
+  "orders": {
+    "title": "Your Orders",
+    "description": "View your order history and track your purchases.",
+    "ariaLabel": "Order history page",
+    "notAuthenticated": "Please log in to view your orders.",
+    "loginButton": "Log In",
+    "noOrders": "You have no orders yet.",
+    "loading": "Loading orders",
+    "order": "Order",
+    "date": "Date",
+    "total": "Total",
+    "status": "Status",
+    "items": "Items",
+    "quantity": "Quantity",
+    "unknownProduct": "Unknown Product",
+    "viewDetails": "View Details"
+  },
+  "errorBoundary": {
+    "title": "Something Went Wrong",
+    "message": "An unexpected error occurred. Please try again or return to the homepage.",
+    "retry": "Retry",
+    "backToHome": "Back to Home"
+  }
+}

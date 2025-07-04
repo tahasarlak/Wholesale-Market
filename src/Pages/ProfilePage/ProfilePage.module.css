@@ -1,0 +1,25 @@
+.profilePage {
+  padding: 2rem 1rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.contentContainer {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.placeholder {
+  font-size: 0.875rem;
+  color: #6b7280;
+}

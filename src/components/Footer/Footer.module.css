@@ -1,0 +1,145 @@
+/* Footer Container */
+.footer {
+  padding: 2rem 1rem;
+  color: var(--text-color);
+}
+
+.light {
+  background-color: #f3f4f6; /* Matches bg-gray-100 */
+}
+
+.dark {
+  background-color: #1f2937; /* Matches dark:bg-gray-800 */
+  color: #e5e7eb; /* Matches dark:text-gray-200 */
+}
+
+/* Inner Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Sections Grid */
+.sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Section */
+.section {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Section Title */
+.sectionTitle {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Section Text */
+.sectionText {
+  color: var(--text-color);
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Links Container */
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Link */
+.link {
+  color: var(--text-color);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--primary-color);
+}
+
+/* Social Icons Container */
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+/* Social Link */
+.socialLink {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* Social Icon */
+.socialIcon {
+  font-size: 1.5rem;
+}
+
+.socialLink:hover .socialIcon {
+  color: var(--accent-color);
+}
+
+/* Copyright */
+.copyright {
+  color: var(--text-color);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .sections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    text-align: left;
+  }
+
+  .socialIcons {
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 3rem 1.5rem;
+  }
+
+  .sections {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionText,
+  .link,
+  .copyright {
+    font-size: 1rem;
+  }
+
+  .socialIcon {
+    font-size: 2rem;
+  }
+}

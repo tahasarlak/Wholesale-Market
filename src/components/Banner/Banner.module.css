@@ -1,0 +1,137 @@
+/* Banner Container */
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--background-color);
+  background-size: cover;
+  background-position: center;
+  min-height: 300px;
+}
+
+/* Banner Content */
+.bannerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for readability */
+  border-radius: 8px;
+}
+
+/* Typography Styles */
+.bannerTitle {
+  color: var(--button-text);
+  font-size: 1.875rem; /* Equivalent to 3xl */
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.bannerSubtitle {
+  color: var(--button-text);
+  font-size: 1.125rem; /* Equivalent to lg */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+/* Button Container */
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Button Styles */
+.shopButton {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.shopButton:hover {
+  background-color: var(--button-hover-bg) !important;
+}
+
+.contactButton {
+  border: 2px solid var(--accent-color) !important;
+  color: var(--accent-color) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.contactButton:hover {
+  background-color: var(--accent-color) !important;
+  color: var(--button-text) !important;
+}
+
+/* Image Error Message */
+.imageError {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  color: var(--button-text);
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .banner {
+    min-height: 400px;
+  }
+
+  .bannerContent {
+    padding: 2rem;
+  }
+
+  .bannerTitle {
+    font-size: 2.25rem; /* Equivalent to 4xl */
+    margin-bottom: 1.5rem;
+  }
+
+  .bannerSubtitle {
+    font-size: 1.25rem; /* Equivalent to xl */
+    margin-bottom: 2rem;
+  }
+
+  .buttonContainer {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .banner {
+    min-height: 500px;
+  }
+
+  .bannerContent {
+    padding: 3rem;
+  }
+
+  .bannerTitle {
+    font-size: 3rem; /* Equivalent to 5xl */
+  }
+
+  .bannerSubtitle {
+    font-size: 1.5rem; /* Equivalent to 2xl */
+  }
+}
+
+@media (min-width: 1024px) {
+  .bannerTitle {
+    font-size: 3.75rem; /* Equivalent to 6xl */
+  }
+}

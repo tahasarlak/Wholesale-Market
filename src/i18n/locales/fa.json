@@ -1,0 +1,160 @@
+{
+  "header": {
+    "home": "خانه",
+    "products": "محصولات",
+    "orders": "سفارش‌ها",
+    "contact": "تماس",
+    "profile": "پروفایل",
+    "login": "ورود",
+    "logout": "خروج",
+    "searchPlaceholder": "جستجوی محصولات...",
+    "searchAria": "جستجوی محصولات",
+    "search": "جستجو",
+    "cartAria": "سبد خرید با {count} مورد",
+    "lightMode": "تغییر به حالت روشن",
+    "darkMode": "تغییر به حالت تیره",
+    "menu": "منو",
+    "language": "تغییر زبان",
+    "selectLanguage": "انتخاب زبان",
+    "avatarError": "تصویر بارگذاری نشد"
+  },
+  "products": {
+    "title": "محصولات ویژه",
+    "description": "طیف گسترده‌ای از محصولات عمده‌فروشی را که برای نیازهای کسب‌وکار شما طراحی شده‌اند، کاوش کنید.",
+    "keywords": "عمده‌فروشی, محصولات, الکترونیک, پوشاک, مبلمان, کتاب, لوازم جانبی",
+    "ariaLabel": "صفحه محصولات",
+    "breadcrumbAria": "ناوبری بردکرامب",
+    "categoryAria": "تب‌های فیلتر دسته‌بندی محصولات",
+    "home": "خانه",
+    "search": "جستجوی محصولات",
+    "searchAria": "جستجوی محصولات بر اساس نام",
+    "category": "دسته‌بندی",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "priceRange": "محدوده قیمت",
+    "minRating": "حداقل امتیاز",
+    "stars": "ستاره",
+    "loading": "در حال بارگذاری محصولات",
+    "noProducts": "هیچ محصولی با معیارهای شما یافت نشد.",
+    "pagination": "صفحه‌بندی محصولات",
+    "addedToCart": "{name} به سبد خرید اضافه شد!",
+    "error": {
+      "noProductContext": "زمینه محصول در دسترس نیست.",
+      "urlParams": "خطا در بارگذاری پارامترهای جستجو.",
+      "addToCart": "افزودن محصول به سبد خرید ناموفق بود."
+    },
+    "categories": {
+      "all": "همه",
+      "electronics": "الکترونیک",
+      "clothing": "پوشاک",
+      "furniture": "مبلمان",
+      "books": "کتاب",
+      "accessories": "لوازم جانبی"
+    },
+    "sortOptions": {
+      "default": "پیش‌فرض",
+      "price-asc": "قیمت: کم به زیاد",
+      "price-desc": "قیمت: زیاد به کم",
+      "rating-desc": "امتیاز: زیاد به کم",
+      "name-asc": "نام: الف تا ی"
+    }
+  },
+  "product": {
+    "home": "خانه",
+    "products": "محصولات",
+    "notFound": "محصول یافت نشد",
+    "loading": "در حال بارگذاری جزئیات محصول",
+    "ariaLabel": "جزئیات برای {name}",
+    "breadcrumbAria": "ناوبری بردکرامب",
+    "noDescription": "توضیحات در دسترس نیست.",
+    "imageError": "تصویر محصول بارگذاری نشد",
+    "category": "دسته‌بندی",
+    "new": "جدید",
+    "onSale": "در حال فروش",
+    "inStock": "موجود ({count})",
+    "outOfStock": "ناموجود",
+    "bulkPricing": "قیمت‌گذاری عمده",
+    "bulkPrice": "از {price}",
+    "bulkPricingTier": "{minQuantity}+ واحد: {price} برای هر کدام",
+    "bulkAvailable": "قیمت‌گذاری عمده در دسترس است",
+    "bulkAvailableAria": "قیمت‌گذاری عمده برای این محصول در دسترس است",
+    "variants": "انواع",
+    "unknownVariant": "نوع ناشناخته",
+    "variantSelected": "نوع انتخاب شده: {variant}",
+    "quantity": "تعداد",
+    "quantityAria": "انتخاب تعداد برای {name}",
+    "addToCart": "افزودن به سبد خرید",
+    "addToCartAria": "افزودن {quantity} {name} به سبد خرید",
+    "viewDetails": "مشاهده جزئیات",
+    "viewDetailsAria": "مشاهده جزئیات برای {name}",
+    "prevImage": "تصویر قبلی",
+    "nextImage": "تصویر بعدی",
+    "thumbnailAria": "تصویر کوچک {index} از {name}",
+    "selectThumbnail": "انتخاب تصویر کوچک {index}",
+    "ratingAria": "امتیاز {rating} ستاره",
+    "reviews": "نظرات",
+    "relatedProducts": "محصولات مرتبط",
+    "addedToCart": "افزودن {quantity} {name} به سبد خرید",
+    "addedToWishlist": "به لیست علاقه‌مندی‌ها اضافه شد",
+    "removeFromWishlist": "حذف از لیست علاقه‌مندی‌ها",
+    "removedFromWishlist": "از لیست علاقه‌مندی‌ها حذف شد"
+  },
+  "testimonials": {
+    "title": "نظرات مشتریان ما",
+    "johnDoe": "معاملات شگفت‌انگیز و تحویل سریع! بازار عمده‌فروشی کسب‌وکار من را متحول کرده است.",
+    "janeSmith": "کیفیت محصولات فوق‌العاده است و خدمات مشتریان بی‌نظیر است!",
+    "mikeJohnson": "تنوع محصولات موجود را دوست دارم. این یک فروشگاه کامل برای تمام نیازهای من است.",
+    "avatarError": "تصویر بارگذاری نشد"
+  },
+  "app": {
+    "title": "بازار عمده‌فروشی - بهترین معاملات آنلاین",
+    "description": "فروشگاه یک‌جا برای محصولات عمده‌فروشی با قیمت‌های بی‌نظیر.",
+    "loading": "در حال بارگذاری برنامه"
+  },
+  "auth": {
+    "loggedIn": "با موفقیت وارد شدید",
+    "loggedOut": "با موفقیت خارج شدید"
+  },
+  "wishlist": {
+    "added": "به لیست علاقه‌مندی‌ها اضافه شد",
+    "removed": "از لیست علاقه‌مندی‌ها حذف شد"
+  },
+  "layout": {
+    "mainContent": "محتوای اصلی",
+    "scrollToTop": "رفتن به بالا"
+  },
+  "login": {
+    "title": "ورود",
+    "prompt": "برای دسترسی به حساب خود و مدیریت سفارش‌هایتان وارد شوید.",
+    "alreadyLoggedIn": "شما قبلاً وارد شده‌اید.",
+    "login": "ورود",
+    "logout": "خروج"
+  },
+  "profile": {
+    "title": "پروفایل شما",
+    "description": "جزئیات حساب و تنظیمات خود را مدیریت کنید.",
+    "placeholder": "مدیریت پروفایل به زودی ارائه می‌شود."
+  },
+  "orders": {
+    "title": "سفارش‌های شما",
+    "description": "تاریخچه سفارش‌های خود را مشاهده کرده و خریدهای خود را پیگیری کنید.",
+    "ariaLabel": "صفحه تاریخچه سفارش‌ها",
+    "notAuthenticated": "لطفاً برای مشاهده سفارش‌های خود وارد شوید.",
+    "loginButton": "ورود",
+    "noOrders": "شما هنوز هیچ سفارشی ندارید.",
+    "loading": "در حال بارگذاری سفارش‌ها",
+    "order": "سفارش",
+    "date": "تاریخ",
+    "total": "مجموع",
+    "status": "وضعیت",
+    "items": "موارد",
+    "quantity": "تعداد",
+    "unknownProduct": "محصول ناشناخته",
+    "viewDetails": "مشاهده جزئیات"
+  },
+  "errorBoundary": {
+    "title": "مشکلی پیش آمد",
+    "message": "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید یا به صفحه اصلی بازگردید.",
+    "retry": "تلاش مجدد",
+    "backToHome": "بازگشت به خانه"
+  }
+}

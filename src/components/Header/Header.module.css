@@ -1,0 +1,258 @@
+/* Header Container */
+.header {
+  background-color: var(--primary-color);
+}
+
+.dark {
+  background-color: #1f2937; /* Matches dark theme */
+}
+
+/* AppBar */
+.appBar {
+  background-color: inherit;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  min-height: 64px;
+}
+
+/* Logo */
+.logo {
+  color: var(--button-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Navigation Container */
+.navContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Navigation Button */
+.navButton {
+  color: var(--button-text) !important;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: none;
+  padding: 0.5rem 1rem;
+}
+
+.navButton:hover {
+  background-color: var(--button-hover-bg) !important;
+}
+
+/* Actions Container */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Search Container */
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Search Input */
+.searchInput {
+  background-color: var(--input-bg);
+  border-radius: var(--input-border-radius);
+}
+
+.searchInput input {
+  color: var(--text-color);
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Search Button */
+.searchButton {
+  color: var(--button-text);
+}
+
+.searchButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Cart Icon */
+.cartIcon {
+  color: var(--button-text);
+}
+
+.cartIcon:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Cart Badge */
+.cartBadge .MuiBadge-badge {
+  background-color: var(--accent-color);
+  color: var(--button-text);
+}
+
+/* Theme Toggle Button */
+.themeToggleButton {
+  color: var(--button-text);
+}
+
+.themeToggleButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Language Button */
+.languageButton {
+  color: var(--button-text);
+}
+
+.languageButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Menu Button */
+.menuButton {
+  color: var(--button-text);
+}
+
+.menuButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Drawer */
+.drawer {
+  /* No additional styles needed as paper is styled below */
+}
+
+.drawerPaper {
+  background-color: var(--background-color);
+  width: 250px;
+}
+
+.drawerList {
+  padding: 1rem;
+}
+
+.drawerListItem {
+  color: var(--text-color);
+}
+
+.drawerListItem:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Language Modal */
+.languageModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Language Modal Box */
+.languageModalBox {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 300px;
+  max-width: 90%;
+}
+
+/* Language Modal Title */
+.languageModalTitle {
+  color: var(--text-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Language List */
+.languageList {
+  padding: 0;
+}
+
+/* Language List Item */
+.languageListItem {
+  color: var(--text-color);
+}
+
+.languageListItem:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Language Icon */
+.languageIcon {
+  min-width: 36px;
+}
+
+/* Flag Image */
+.flagImage {
+  width: 24px;
+  height: 24px;
+}
+
+/* Flag Fallback */
+.flagFallback {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  border-radius: 4px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .navContainer {
+    display: none;
+  }
+
+  .actions {
+    gap: 0.25rem;
+  }
+
+  .searchInput {
+    width: 120px;
+  }
+}
+
+@media (min-width: 601px) {
+  .toolbar {
+    padding: 0 1.5rem;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+  }
+
+  .searchInput {
+    width: 200px;
+  }
+
+  .navButton {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .toolbar {
+    padding: 0 2rem;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  .searchInput {
+    width: 250px;
+  }
+}

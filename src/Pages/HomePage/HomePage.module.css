@@ -1,0 +1,49 @@
+.homePage {
+  width: 100%;
+}
+
+.welcomeSection {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcomeTitle {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.welcomeText {
+  font-size: 1.125rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.exploreButtonContainer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.exploreButton {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.exploreButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.container {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}

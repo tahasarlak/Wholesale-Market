@@ -1,0 +1,133 @@
+/* Section Container */
+.categoriesSection {
+  padding: 2rem 1rem;
+  background-color: var(--background-color);
+}
+
+/* Title */
+.title {
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Grid Container */
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid Item */
+.gridItem {
+  display: flex;
+  justify-content: center;
+}
+
+/* Card Wrapper */
+.cardWrapper {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Card */
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Image */
+.cardImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Card Content */
+.cardContent {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Card Title */
+.cardTitle {
+  color: var(--text-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Explore Button */
+.exploreButton {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.exploreButton:hover {
+  background-color: var(--button-hover-bg) !important;
+}
+
+/* Image Error Message */
+.imageError {
+  color: var(--error-color);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .categoriesSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .gridContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cardWrapper {
+    max-width: 350px;
+  }
+
+  .cardImage {
+    height: 220px;
+  }
+
+  .cardTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .cardWrapper {
+    max-width: 400px;
+  }
+}

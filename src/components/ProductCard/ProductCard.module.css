@@ -1,0 +1,177 @@
+/* Card Wrapper */
+.cardWrapper {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Card */
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardLight {
+  background-color: #ffffff;
+}
+
+.cardDark {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+/* Card Media */
+.cardMedia {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Card Content */
+.cardContent {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Card Category */
+.cardCategory {
+  color: var(--text-color);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Card Title */
+.cardTitle {
+  color: var(--text-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Card Description */
+.cardDescription {
+  color: var(--text-color);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Card Price */
+.cardPrice {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Bulk Price */
+.bulkPrice {
+  color: var(--text-color);
+  opacity: 0.7;
+  margin-left: 0.5rem;
+}
+
+/* Rating Container */
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Card Rating */
+.cardRating {
+  color: var(--accent-color);
+}
+
+/* Review Count */
+.reviewCount {
+  color: var(--text-color);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Bulk Chip */
+.bulkChip {
+  background-color: var(--primary-color) !important;
+  color: var(--button-text) !important;
+  font-size: 0.75rem;
+}
+
+/* Button Container */
+.buttonContainer {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* View Details Button */
+.viewDetailsButton {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.viewDetailsButton:hover {
+  background-color: var(--button-hover-bg) !important;
+}
+
+/* Add to Cart Button */
+.addToCartButton {
+  border-color: var(--button-bg) !important;
+  color: var(--button-bg) !important;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.addToCartButton:hover {
+  background-color: var(--button-hover-bg) !important;
+  color: var(--button-text) !important;
+}
+
+/* Image Error */
+.imageError {
+  color: var(--error-color);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .cardWrapper {
+    max-width: 350px;
+  }
+
+  .cardTitle {
+    font-size: 1.5rem;
+  }
+
+  .cardPrice {
+    font-size: 1.125rem;
+  }
+
+  .cardDescription {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardWrapper {
+    max-width: 400px;
+  }
+
+  .cardMedia {
+    height: 220px;
+  }
+}

@@ -1,0 +1,39 @@
+.cartPage {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.emptyMessage {
+  font-size: 1rem;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkoutButton {
+  margin-top: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkoutButton:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.checkoutButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

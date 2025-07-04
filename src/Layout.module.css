@@ -1,0 +1,21 @@
+.layout {
+  background-color: var(--background, #ffffff);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dark {
+  background-color: var(--background-dark, #121212);
+  color: var(--text-dark, #ffffff);
+}
+
+main {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    padding: 0.5rem;
+  }
+}
