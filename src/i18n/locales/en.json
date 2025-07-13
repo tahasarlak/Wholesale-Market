@@ -10,13 +10,22 @@
     "searchPlaceholder": "Search products...",
     "searchAria": "Search products",
     "search": "Search",
-    "cartAria": "Cart with {count} items",
+    "purchaseRequestsAria": "View purchase requests ({{count}})",
+    "wishlistAria": "View wishlist ({{count}})",
     "lightMode": "Switch to light mode",
     "darkMode": "Switch to dark mode",
     "menu": "Menu",
     "language": "Change language",
     "selectLanguage": "Select Language",
-    "avatarError": "Image failed to load"
+    "avatarError": "Image failed to load",
+    "addProduct": "Add Product",
+    "sellerDashboard": "Seller Dashboard",
+    "adminPanel": "Admin Panel",
+    "role": {
+      "buyer": "Buyer",
+      "seller": "Seller",
+      "admin": "Admin"
+    }
   },
   "products": {
     "title": "Featured Products",
@@ -36,12 +45,15 @@
     "loading": "Loading products",
     "noProducts": "No products found matching your criteria.",
     "pagination": "Product pagination",
-    "addedToCart": "Added {name} to cart!",
-    "error": {
-      "noProductContext": "Product context is not available.",
-      "urlParams": "Error loading search parameters.",
-      "addToCart": "Failed to add product to cart."
-    },
+    "pleaseLogin": "Please log in to perform this action",
+    "switchToBuyer": "Switching to buyer role for purchase request",
+    "sellerRoleRequired": "Seller role required to add products",
+    "sellerNotVerified": "Your seller account is not verified",
+    "addProduct": "Add New Product",
+    "purchaseRequestSent": "Purchase request for {{name}} (Quantity: {{quantity}}) sent successfully",
+    "purchaseRequestFailed": "Failed to submit purchase request",
+    "productAdded": "Product added successfully",
+    "productAddFailed": "Failed to add product",
     "categories": {
       "all": "All",
       "electronics": "Electronics",
@@ -75,15 +87,41 @@
     "bulkPricing": "Bulk Pricing",
     "bulkPrice": "From {price}",
     "bulkPricingTier": "{minQuantity}+ units: {price} each",
-    "bulkAvailable": "Bulk Pricing Available",
-    "bulkAvailableAria": "Bulk pricing available for this product",
     "variants": "Variants",
     "unknownVariant": "Unknown Variant",
-    "variantSelected": "Selected variant: {variant}",
+    "selectVariant": "Select Variant",
     "quantity": "Quantity",
     "quantityAria": "Select quantity for {name}",
-    "addToCart": "Add to Cart",
-    "addToCartAria": "Add {quantity} {name} to cart",
+    "quantityRange": "Quantity must be between {min} and {max}",
+    "contactWhatsApp": "Contact via WhatsApp",
+    "contactWhatsAppAria": "Contact supplier via WhatsApp for {name} with quantity {quantity}",
+    "contactTelegram": "Contact via Telegram",
+    "contactTelegramAria": "Contact supplier via Telegram for {name} with quantity {quantity}",
+    "contactEmail": "Contact via Email",
+    "contactEmailAria": "Contact supplier via Email for {name} with quantity {quantity}",
+    "purchaseRequest": "Request Purchase",
+    "purchaseRequestAria": "Request purchase for {name}",
+    "proposedPrice": "Proposed Price",
+    "proposedPriceAria": "Enter proposed price for {name}",
+    "seller": "Seller",
+    "unknownSeller": "Unknown Seller",
+    "sku": "SKU",
+    "brand": "Brand",
+    "material": "Material",
+    "dimensions": "Dimensions",
+    "weight": "Weight",
+    "warranty": "Warranty",
+    "shippingDetails": "Shipping Details",
+    "shipsFrom": "Ships From",
+    "estimatedDelivery": "Estimated Delivery",
+    "shippingCost": "Shipping Cost",
+    "returnPolicy": "Return Policy",
+    "tags": "Tags",
+    "condition": {
+      "new": "New",
+      "used": "Used",
+      "refurbished": "Refurbished"
+    },
     "viewDetails": "View Details",
     "viewDetailsAria": "View details for {name}",
     "prevImage": "Previous image",
@@ -93,7 +131,6 @@
     "ratingAria": "{rating} star rating",
     "reviews": "Reviews",
     "relatedProducts": "Related Products",
-    "addedToCart": "Added {quantity} {name} to cart",
     "addedToWishlist": "Added to wishlist",
     "removeFromWishlist": "Remove from wishlist",
     "removedFromWishlist": "Removed from wishlist"
@@ -108,7 +145,11 @@
   "app": {
     "title": "Wholesale Market - Best Deals Online",
     "description": "Your one-stop shop for wholesale products with unbeatable prices.",
-    "loading": "Loading application"
+    "loading": "Loading application",
+    "purchaseRequestSubmitted": "Purchase request submitted successfully",
+    "purchaseRequestError": "Failed to submit purchase request",
+    "notificationSent": "Notification sent successfully",
+    "notificationError": "Failed to send notification"
   },
   "auth": {
     "loggedIn": "Successfully logged in",
@@ -116,7 +157,9 @@
   },
   "wishlist": {
     "added": "Added to wishlist",
-    "removed": "Removed from wishlist"
+    "removed": "Removed from wishlist",
+    "title": "Your Wishlist",
+    "noItems": "Your wishlist is empty"
   },
   "layout": {
     "mainContent": "Main content",
@@ -125,9 +168,36 @@
   "login": {
     "title": "Login",
     "prompt": "Sign in to access your account and manage your orders.",
-    "alreadyLoggedIn": "You are already logged in.",
+    "alreadyLoggedIn": "You are already logged in as {{name}}.",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "fillAllFields": "Please fill all required fields",
+    "success": "Logged in successfully",
+    "failed": "Login failed",
+    "sellerRegistration": "Seller Registration",
+    "sellerRegistrationSubmitted": "Seller registration submitted, pending approval",
+    "sellerRegistrationFailed": "Failed to register as seller",
+    "email": "Email",
+    "emailAria": "Enter your email",
+    "password": "Password",
+    "passwordAria": "Enter your password",
+    "selectRole": "Select Role",
+    "role": {
+      "buyer": "Buyer",
+      "seller": "Seller",
+      "admin": "Admin"
+    },
+    "businessName": "Business Name",
+    "whatsappNumber": "WhatsApp Number",
+    "telegramUsername": "Telegram Username",
+    "preferredCommunication": "Preferred Communication",
+    "comm": {
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram"
+    },
+    "registerSeller": "Register as Seller",
+    "currentRole": "Current Role"
   },
   "profile": {
     "title": "Your Profile",
@@ -151,10 +221,27 @@
     "unknownProduct": "Unknown Product",
     "viewDetails": "View Details"
   },
-  "errorBoundary": {
-    "title": "Something Went Wrong",
-    "message": "An unexpected error occurred. Please try again or return to the homepage.",
-    "retry": "Retry",
-    "backToHome": "Back to Home"
+  "sellerDashboard": {
+    "title": "Seller Dashboard",
+    "products": "Your Products",
+    "purchaseRequests": "Purchase Requests",
+    "noProducts": "You have no products listed.",
+    "noRequests": "No purchase requests received."
+  },
+  "adminPanel": {
+    "title": "Admin Panel",
+    "pendingSellers": "Pending Seller Approvals",
+    "purchaseRequests": "All Purchase Requests",
+    "noPendingSellers": "No sellers pending approval.",
+    "noRequests": "No purchase requests found.",
+    "approve": "Approve Seller",
+    "approveSeller": "Approve seller {{name}}",
+    "sellerApproved": "Seller approved successfully",
+    "sellerApprovalFailed": "Failed to approve seller",
+    "adminRoleRequired": "Admin role required to access this page"
+  },
+  "purchaseRequests": {
+    "title": "Your Purchase Requests",
+    "noRequests": "You have no purchase requests."
   }
 }

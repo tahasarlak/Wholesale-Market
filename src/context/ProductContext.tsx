@@ -3,206 +3,256 @@ import { createContext } from 'react';
 export interface Product {
   id: number;
   name: string;
-  image: string;
-  images: string[];
-  price: string;
-  category: string;
   description?: string;
-  bulkPricing?: { minQuantity: number; price: string }[];
-  rating: number;
-  reviewCount: number;
+  shortDescription?: string;
+  price: string;
+  image: string;
+  images?: string[];
+  category: string;
+  rating?: number;
+  reviewCount?: number;
   stockQuantity?: number;
   isNew?: boolean;
   isOnSale?: boolean;
-  variants?: { color?: string; size?: string }[];
+  minPurchaseQuantity: number;
+  maxPurchaseQuantity: number;
+  sellerId: number;
+  sku?: string;
+  brand?: string;
+  material?: string;
+  dimensions?: { length: number; width: number; height: number; unit: string };
+  weight?: { value: number; unit: string };
+  warranty?: string;
+  shippingDetails?: { shipsFrom: string; estimatedDelivery: string; shippingCost: string };
+  tags?: string[];
+  condition?: 'new' | 'used' | 'refurbished';
+  returnPolicy?: string;
+  variants?: Array<{ sku: string; color?: string; size?: string; price?: string }>;
+  bulkPricing?: Array<{ minQuantity: number; price: string }>;
 }
 
-export interface CartItem {
+export interface Seller {
+  id: number;
+  name: string;
+  email: string;
+  businessName: string;
+  whatsappNumber?: string;
+  telegramUsername?: string;
+  preferredCommunication: 'email' | 'whatsapp' | 'telegram';
+  paymentMethods: string[];
+  verificationStatus: 'pending' | 'verified' | 'rejected';
+}
+
+export interface PurchaseRequest {
+  id: number;
   productId: number;
+  sellerId: number;
+  buyerId: number;
   quantity: number;
+  proposedPrice?: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  buyerContact: { email?: string; whatsapp?: string; telegram?: string };
 }
 
 export interface ProductContextType {
   products: Product[];
-  cartItems: CartItem[];
-  addToCart: (productId: number, quantity: number) => void;
-  removeFromCart: (productId: number) => void;
-  getCartItemCount: () => number;
+  sellers: Seller[];
+  purchaseRequests: PurchaseRequest[];
+  submitPurchaseRequest: (
+    productId: number,
+    quantity: number,
+    buyerContact: { email?: string; whatsapp?: string; telegram?: string },
+    proposedPrice?: string
+  ) => Promise<void>;
+  sendNotification: (recipientId: number, message: string, method: 'email' | 'whatsapp' | 'telegram') => Promise<void>;
   isLoading: boolean;
   error: string | null;
 }
 
-export const ProductContext = createContext<ProductContextType>({
-  products: [],
-  cartItems: [],
-  addToCart: () => {},
-  removeFromCart: () => {},
-  getCartItemCount: () => 0,
-  isLoading: false,
-  error: null,
-});
-
 export const initialProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Smartphone X',
-    image: 'https://picsum.photos/id/1015/300/200',
-    images: [
-      'https://picsum.photos/id/1015/600/400',
-      'https://picsum.photos/id/1018/600/400',
-      'https://picsum.photos/id/1019/600/400',
-    ],
-    price: '$499.99',
-    category: 'Electronics',
-    description: 'A high-performance smartphone with advanced features, perfect for bulk purchases.',
-    bulkPricing: [
-      { minQuantity: 10, price: '$479.99' },
-      { minQuantity: 50, price: '$459.99' },
-    ],
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 100,
-    isNew: true,
-    isOnSale: false,
-    variants: [{ color: 'Black' }, { color: 'Silver' }],
-  },
+  
   {
     id: 2,
-    name: 'Leather Jacket',
-    image: 'https://picsum.photos/id/1020/300/200',
+    name: 'Wireless Headphones',
+    description: 'High-quality wireless headphones with noise cancellation and 20-hour battery life.',
+    shortDescription: 'Premium wireless headphones',
+    price: '$149.99',
+    image: 'https://picsum.photos/300/200?random=1',
     images: [
-      'https://picsum.photos/id/1020/600/400',
-      'https://picsum.photos/id/1021/600/400',
+      'https://picsum.photos/300/200?random=1',
+      'https://picsum.photos/300/200?random=2',
+      'https://picsum.photos/300/200?random=3',
     ],
-    price: '$89.99',
-    category: 'Clothing',
-    description: 'Premium leather jacket, ideal for retail or wholesale.',
-    bulkPricing: [
-      { minQuantity: 20, price: '$79.99' },
-      { minQuantity: 100, price: '$69.99' },
-    ],
-    rating: 0,
-    reviewCount: 0,
+    category: 'Electronics',
+    rating: 4.8,
+    reviewCount: 25,
     stockQuantity: 50,
     isNew: false,
     isOnSale: true,
-    variants: [{ size: 'M' }, { size: 'L' }],
+    minPurchaseQuantity: 1,
+    maxPurchaseQuantity: 10,
+    sellerId: 2,
+    sku: 'WH002',
+    brand: 'AudioTech',
+    material: 'Aluminum, Leather',
+    dimensions: { length: 18, width: 15, height: 8, unit: 'cm' },
+    weight: { value: 0.3, unit: 'kg' },
+    warranty: '2 years',
+    shippingDetails: { shipsFrom: 'China', estimatedDelivery: '7-14 days', shippingCost: '$15' },
+    tags: ['headphones', 'wireless', 'audio'],
+    condition: 'new',
+    returnPolicy: '14 days',
+    variants: [
+      { sku: 'WH002-BK', color: 'Black', price: '$149.99' },
+      { sku: 'WH002-WH', color: 'White', price: '$149.99' },
+    ],
+    bulkPricing: [
+      { minQuantity: 5, price: '$139.99' },
+      { minQuantity: 10, price: '$129.99' },
+    ],
   },
   {
     id: 3,
-    name: 'Wooden Table',
-    image: 'https://picsum.photos/id/1025/300/200',
-    images: ['https://picsum.photos/id/1025/600/400'],
-    price: '$299.99',
-    category: 'Furniture',
-    description: 'Sturdy wooden table for home or office use.',
-    rating: 0,
-    reviewCount: 0,
+    name: 'Vintage Leather Jacket',
+    description: 'Classic leather jacket made from genuine leather, perfect for casual and formal wear.',
+    shortDescription: 'Stylish leather jacket',
+    price: '$199.00',
+    image: 'https://picsum.photos/300/200?random=4',
+    images: [
+      'https://picsum.photos/300/200?random=4',
+      'https://picsum.photos/300/200?random=5',
+    ],
+    category: 'Fashion',
+    rating: 4.2,
+    reviewCount: 15,
     stockQuantity: 20,
-    isNew: false,
+    isNew: true,
     isOnSale: false,
+    minPurchaseQuantity: 1,
+    maxPurchaseQuantity: 5,
+    sellerId: 3,
+    sku: 'LJ003',
+    brand: 'RetroWear',
+    material: 'Genuine Leather',
+    weight: { value: 1.2, unit: 'kg' },
+    warranty: '6 months',
+    shippingDetails: { shipsFrom: 'Italy', estimatedDelivery: '10-15 days', shippingCost: '$25' },
+    tags: ['fashion', 'jacket', 'leather'],
+    condition: 'new',
+    returnPolicy: '30 days',
+    variants: [
+      { sku: 'LJ003-M', size: 'Medium', price: '$199.00' },
+      { sku: 'LJ003-L', size: 'Large', price: '$199.00' },
+    ],
   },
   {
     id: 4,
-    name: 'Wireless Earbuds',
-    image: 'https://picsum.photos/id/1033/300/200',
-    images: ['https://picsum.photos/id/1033/600/400'],
-    price: '$129.99',
-    category: 'Electronics',
-    description: 'High-quality wireless earbuds with noise cancellation.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 150,
+    name: 'Smart LED Bulb',
+    description: 'Energy-efficient smart LED bulb with app control and color-changing features.',
+    shortDescription: 'Smart LED bulb',
+    price: '$29.99',
+    image: 'https://picsum.photos/300/200?random=6',
+    images: ['https://picsum.photos/300/200?random=6'],
+    category: 'Home & Living',
+    rating: 4.0,
+    reviewCount: 8,
+    stockQuantity: 200,
     isNew: true,
-    isOnSale: false,
-    variants: [{ color: 'White' }, { color: 'Black' }],
-  },
-  {
-    id: 5,
-    name: 'Denim Jeans',
-    image: 'https://picsum.photos/id/1040/300/200',
-    images: ['https://picsum.photos/id/1040/600/400'],
-    price: '$59.99',
-    category: 'Clothing',
-    description: 'Comfortable and stylish denim jeans.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 80,
-    isNew: false,
     isOnSale: true,
-    variants: [{ size: 'S' }, { size: 'M' }, { size: 'L' }],
+    minPurchaseQuantity: 2,
+    maxPurchaseQuantity: 50,
+    sellerId: 4,
+    sku: 'SLB004',
+    brand: 'BrightHome',
+    material: 'Plastic, Glass',
+    dimensions: { length: 12, width: 6, height: 6, unit: 'cm' },
+    weight: { value: 0.1, unit: 'kg' },
+    warranty: '1 year',
+    shippingDetails: { shipsFrom: 'USA', estimatedDelivery: '3-5 days', shippingCost: '$5' },
+    tags: ['smart home', 'lighting', 'LED'],
+    condition: 'new',
+    returnPolicy: '30 days',
+    variants: [{ sku: 'SLB004-WH', color: 'White', price: '$29.99' }],
+    bulkPricing: [{ minQuantity: 10, price: '$25.99' }],
   },
   {
-    id: 6,
-    name: 'Sofa Set',
-    image: 'https://picsum.photos/id/1047/300/200',
-    images: ['https://picsum.photos/id/1047/600/400'],
-    price: '$799.99',
-    category: 'Furniture',
-    description: 'Elegant sofa set for modern living spaces.',
-    rating: 0,
-    reviewCount: 0,
+    id: 1,
+    name: 'Refurbished Laptop',
+    description: 'Refurbished high-performance laptop with SSD and 16GB RAM, ideal for work and gaming.',
+    shortDescription: 'Refurbished laptop',
+    price: '$499.00',
+    image: 'https://picsum.photos/300/200?random=7',
+    images: [
+      'https://picsum.photos/300/200?random=7',
+      'https://picsum.photos/300/200?random=8',
+      'https://picsum.photos/300/200?random=9',
+    ],
+    category: 'Electronics',
+    rating: 4.3,
+    reviewCount: 12,
     stockQuantity: 10,
     isNew: false,
     isOnSale: false,
-  },
-  {
-    id: 7,
-    name: 'Laptop Pro',
-    image: 'https://picsum.photos/id/1050/300/200',
-    images: ['https://picsum.photos/id/1050/600/400'],
-    price: '$999.99',
-    category: 'Electronics',
-    description: 'Powerful laptop for professional use.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 30,
-    isNew: true,
-    isOnSale: false,
-    variants: [{ color: 'Silver' }, { color: 'Space Gray' }],
-  },
-  {
-    id: 8,
-    name: 'Winter Coat',
-    image: 'https://picsum.photos/id/1060/300/200',
-    images: ['https://picsum.photos/id/1060/600/400'],
-    price: '$149.99',
-    category: 'Clothing',
-    description: 'Warm and stylish winter coat.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 40,
-    isNew: false,
-    isOnSale: true,
-    variants: [{ size: 'M' }, { size: 'L' }],
-  },
-  {
-    id: 9,
-    name: 'Bookshelf',
-    image: 'https://picsum.photos/id/1062/300/200',
-    images: ['https://picsum.photos/id/1062/600/400'],
-    price: '$199.99',
-    category: 'Furniture',
-    description: 'Spacious bookshelf for home or office.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 25,
-    isNew: false,
-    isOnSale: false,
-  },
-  {
-    id: 10,
-    name: 'Smart Watch',
-    image: 'https://picsum.photos/id/1074/300/200',
-    images: ['https://picsum.photos/id/1074/600/400'],
-    price: '$249.99',
-    category: 'Electronics',
-    description: 'Smart watch with fitness tracking features.',
-    rating: 0,
-    reviewCount: 0,
-    stockQuantity: 60,
-    isNew: true,
-    isOnSale: false,
-    variants: [{ color: 'Black' }, { color: 'Silver' }],
+    minPurchaseQuantity: 1,
+    maxPurchaseQuantity: 3,
+    sellerId: 2,
+    sku: 'RL005',
+    brand: 'TechTrend',
+    material: 'Aluminum, Plastic',
+    dimensions: { length: 35, width: 24, height: 2, unit: 'cm' },
+    weight: { value: 1.8, unit: 'kg' },
+    warranty: '90 days',
+    shippingDetails: { shipsFrom: 'USA', estimatedDelivery: '5-7 days', shippingCost: '$20' },
+    tags: ['laptop', 'refurbished', 'electronics'],
+    condition: 'refurbished',
+    returnPolicy: '15 days',
   },
 ];
+
+export const initialSellers: Seller[] = [
+  {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@example.com',
+    businessName: 'Doe Enterprises',
+    whatsappNumber: '+1234567890',
+    telegramUsername: '@DoeEnterprises',
+    preferredCommunication: 'email',
+    paymentMethods: ['Bank Transfer'],
+    verificationStatus: 'verified',
+  },
+  {
+    id: 2,
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    businessName: 'Smith Electronics',
+    whatsappNumber: '+1987654321',
+    telegramUsername: '@SmithElectronics',
+    preferredCommunication: 'whatsapp',
+    paymentMethods: ['PayPal', 'Credit Card'],
+    verificationStatus: 'verified',
+  },
+  {
+    id: 3,
+    name: 'Marco Rossi',
+    email: 'marco@example.com',
+    businessName: 'Rossi Fashion',
+    whatsappNumber: '+393123456789',
+    preferredCommunication: 'email',
+    paymentMethods: ['Bank Transfer', 'PayPal'],
+    verificationStatus: 'pending',
+  },
+  {
+    id: 4,
+    name: 'Emily Chen',
+    email: 'emily@example.com',
+    businessName: 'BrightHome Solutions',
+    telegramUsername: '@BrightHome',
+    preferredCommunication: 'telegram',
+    paymentMethods: ['Credit Card', 'Cryptocurrency'],
+    verificationStatus: 'verified',
+  },
+];
+
+export const ProductContext = createContext<ProductContextType | null>(null);

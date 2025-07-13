@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo, Suspense, useCallback } from 'react';
+import { lazy, useEffect, useState, useContext, useMemo, Suspense, useCallback } from 'react';
 import {
   Container,
   Typography,
@@ -14,6 +14,7 @@ import {
   Link as MuiLink,
   InputAdornment,
   Slider,
+  Button,
 } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
@@ -21,14 +22,16 @@ import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ProductContext, ProductContextType } from '../../context/ProductContext';
 import { ThemeContext, ThemeContextType } from '../../context/ThemeContext';
+import { AuthContext, AuthContextType, UserRole } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import styles from './ProductsPage.module.css';
 import debounce from 'lodash/debounce';
 import { startTransition } from 'react';
 
-const ProductCard = React.lazy(() => import('../../components/ProductCard/ProductCard'));
-const ErrorBoundary = React.lazy(() => import('../../components/ErrorBoundary/ErrorBoundary'));
+// Preload lazy components
+const ProductCard = lazy(() => import('../../components/ProductCard/ProductCard'));
+const ErrorBoundary = lazy(() => import('../../components/ErrorBoundary/ErrorBoundary'));
 
 const categories = ['All', 'Electronics', 'Clothing', 'Furniture', 'Books', 'Accessories'] as const;
 const sortOptions = [
@@ -52,8 +55,9 @@ const ProductsPage: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const productContext = useContext(ProductContext);
+  const productContext = useContext(ProductContext) as ProductContextType;
   const { isDarkMode } = useContext(ThemeContext) as ThemeContextType;
+  const { isAuthenticated, user, switchRole } = useContext(AuthContext) as AuthContextType;
   const shouldReduceMotion = useReducedMotion();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -64,13 +68,18 @@ const ProductsPage: React.FC = () => {
   const [minRating, setMinRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // Preload lazy components
+  useEffect(() => {
+    import('../../components/ProductCard/ProductCard');
+    import('../../components/ErrorBoundary/ErrorBoundary');
+  }, []);
+
   if (!productContext) {
     throw new Error(t('products.error.noProductContext'));
   }
 
-  const { products, addToCart } = productContext;
+  const { products, sellers, submitPurchaseRequest } = productContext;
 
-  // Animation variants for section and cards
   const sectionVariants: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 50 },
     visible: {
@@ -131,9 +140,10 @@ const ProductsPage: React.FC = () => {
     return products
       .filter((product) => {
         if (!product) return false;
-
+        const seller = sellers.find((s) => s.id === product.sellerId);
+        if (!seller || seller.verificationStatus !== 'verified') return false; // Only verified sellers
         const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-        const matchesSearch = product.name?.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = product.name?.toLowerCase().includes(searchQuery.toLowerCase()) || product.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
         const price = parseFloat(product.price?.replace('$', '') || '0');
         const matchesPrice = price >= priceRange.min && price <= priceRange.max;
         const matchesRating = (product.rating || 0) >= minRating;
@@ -157,7 +167,7 @@ const ProductsPage: React.FC = () => {
             return 0;
         }
       });
-  }, [products, selectedCategory, searchQuery, sortOption, priceRange, minRating]);
+  }, [products, sellers, selectedCategory, searchQuery, sortOption, priceRange, minRating]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
@@ -172,18 +182,49 @@ const ProductsPage: React.FC = () => {
     });
   }, []);
 
-  const handleAddToCart = useCallback(
-    (productId: number, productName: string) => {
+  const handlePurchaseRequest = useCallback(
+    async (productId: number, productName: string, quantity: number = 1, proposedPrice?: string) => {
+      if (!isAuthenticated || !user) {
+        toast.error(t('products.pleaseLogin'));
+        navigate('/login');
+        return;
+      }
+      if (!user.roles.includes(UserRole.BUYER)) {
+        toast.info(t('products.switchToBuyer'));
+        switchRole(UserRole.BUYER);
+      }
       try {
-        addToCart(productId, 1);
-        toast.success(t('products.addedToCart', { name: productName }));
+        const buyerContact = {
+          email: user.buyerInfo?.preferredContact === 'email' ? user.email : undefined,
+          whatsapp: user.buyerInfo?.preferredContact === 'whatsapp' ? user.sellerInfo?.whatsappNumber : undefined,
+          telegram: user.buyerInfo?.preferredContact === 'telegram' ? user.sellerInfo?.telegramUsername : undefined,
+        };
+        await submitPurchaseRequest(productId, quantity, buyerContact, proposedPrice);
+        toast.success(t('products.purchaseRequestSent', { name: productName, quantity }));
       } catch (error) {
-        console.error('Error adding to cart:', error);
-        toast.error(t('products.error.addToCart'));
+        console.error('Error submitting purchase request:', error);
+        toast.error(t('products.purchaseRequestFailed'));
       }
     },
-    [addToCart, t]
+    [isAuthenticated, user, submitPurchaseRequest, navigate, switchRole, t]
   );
+
+  const handleAddProduct = useCallback(() => {
+    if (!isAuthenticated || !user) {
+      toast.error(t('products.pleaseLogin'));
+      navigate('/login');
+      return;
+    }
+    if (!user.roles.includes(UserRole.SELLER)) {
+      toast.error(t('products.sellerRoleRequired'));
+      return;
+    }
+    if (user.sellerInfo?.verificationStatus !== 'verified') {
+      toast.error(t('products.sellerNotVerified'));
+      return;
+    }
+    navigate('/add-product');
+  }, [isAuthenticated, user, navigate, t]);
 
   const handlePriceRangeChange = useCallback(
     (event: Event, newValue: number | number[]) => {
@@ -259,6 +300,7 @@ const ProductsPage: React.FC = () => {
         '@type': 'Product',
         name: product.name,
         category: product.category,
+        sku: product.sku,
       },
     })),
   };
@@ -292,9 +334,21 @@ const ProductsPage: React.FC = () => {
           <Typography className={styles.breadcrumbCurrent}>{t('products.title')}</Typography>
         </Breadcrumbs>
 
-        <Typography variant="h3" component="h1" className={styles.title}>
-          {t('products.title')}
-        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h3" component="h1" className={styles.title}>
+            {t('products.title')}
+          </Typography>
+          {isAuthenticated && user?.roles.includes(UserRole.SELLER) && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddProduct}
+              aria-label={t('products.addProduct')}
+            >
+              {t('products.addProduct')}
+            </Button>
+          )}
+        </Box>
         <Typography variant="h6" className={styles.description}>
           {t('products.description')}
         </Typography>
@@ -402,15 +456,19 @@ const ProductsPage: React.FC = () => {
               </Typography>
             ) : (
               <motion.div className={styles.productGrid} variants={cardVariants} initial="hidden" animate="visible">
-                {paginatedProducts.map((product) => (
-                  <motion.div key={product.id} className={styles.productContainer} variants={cardVariants}>
-                    <ProductCard
-                      product={product}
-                      cardVariants={cardVariants}
-                      handleAddToCart={handleAddToCart}
-                    />
-                  </motion.div>
-                ))}
+                {paginatedProducts.map((product) => {
+                  const seller = sellers.find((s) => s.id === product.sellerId);
+                  return (
+                    <motion.div key={product.id} className={styles.productContainer} variants={cardVariants}>
+                      <ProductCard
+                        product={product}
+                        cardVariants={cardVariants}
+                        handlePurchaseRequest={handlePurchaseRequest}
+                        sellerName={seller?.businessName}
+                      />
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             )}
           </Suspense>

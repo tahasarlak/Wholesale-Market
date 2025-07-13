@@ -1,6 +1,3 @@
-
-
-// src/App.tsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -16,16 +13,19 @@ import ProductDetailPage from './Pages/ProductsPage/ProductDetailPage/ProductDet
 import LoginPage from './Pages/LoginPage/LoginPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import OrdersPage from './Pages/OrdersPage/OrdersPage';
+import AddProductPage from './Pages/AddProductPage/AddProductPage';
+import SellerDashboardPage from './Pages/SellerDashboardPage/SellerDashboardPage';
+import AdminPanelPage from './Pages/AdminPanelPage/AdminPanelPage';
+import PurchaseRequestsPage from './Pages/PurchaseRequestsPage/PurchaseRequestsPage';
+import WishlistPage from './Pages/WishlistPage/WishlistPage';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import { Product, ProductContext, ProductContextType, initialProducts, CartItem } from './context/ProductContext';
+import { ProductContext, ProductContextType, initialProducts, initialSellers, Product, Seller, PurchaseRequest } from './context/ProductContext';
 import { ThemeContext, ThemeContextType } from './context/ThemeContext';
-import { AuthContext, AuthContextType } from './context/AuthContext';
+import { AuthContextProvider } from './context/AuthContext';
 import { WishlistContext, WishlistContextType } from './context/WishlistContext';
 import './styles/global.css';
 import { CircularProgress } from '@mui/material';
 import Layout from './Layout';
-import CartPage from './Pages/CartPage/CartPage';
-import SearchPage from './Pages/SearchPage/SearchPage';
 
 const AppContent: React.FC = () => {
   const { t } = useTranslation();
@@ -33,13 +33,9 @@ const AppContent: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('theme') === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return !!localStorage.getItem('token');
-  });
-  const [products] = useState<Product[]>(initialProducts);
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    return JSON.parse(localStorage.getItem('cart') || '[]');
-  });
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [sellers, setSellers] = useState<Seller[]>(initialSellers);
+  const [purchaseRequests, setPurchaseRequests] = useState<PurchaseRequest[]>([]);
   const [wishlist, setWishlist] = useState<number[]>(() => {
     return JSON.parse(localStorage.getItem('wishlist') || '[]');
   });
@@ -52,49 +48,49 @@ const AppContent: React.FC = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  useEffect(() => {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
   const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
-  const toggleAuth = () => {
-    setIsAuthenticated((prev) => {
-      const newState = !prev;
-      if (newState) {
-        localStorage.setItem('token', 'dummy-token');
-        toast.success(t('auth.loggedIn'));
-      } else {
-        localStorage.removeItem('token');
-        toast.info(t('auth.loggedOut'));
-      }
-      return newState;
-    });
+  const submitPurchaseRequest = async (
+    productId: number,
+    quantity: number,
+    buyerContact: { email?: string; whatsapp?: string; telegram?: string },
+    proposedPrice?: string
+  ) => {
+    setIsLoading(true);
+    try {
+      const product = products.find((p) => p.id === productId);
+      if (!product) throw new Error('Product not found');
+      const newRequest: PurchaseRequest = {
+        id: purchaseRequests.length + 1,
+        productId,
+        sellerId: product.sellerId,
+        buyerId: 0, // Will be set by AuthContext in real implementation
+        quantity,
+        proposedPrice,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        buyerContact,
+      };
+      setPurchaseRequests((prev) => [...prev, newRequest]);
+      toast.success(t('app.purchaseRequestSubmitted'));
+    } catch (err) {
+      setError(t('app.purchaseRequestError'));
+      toast.error(t('app.purchaseRequestError'));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const addToCart = (productId: number, quantity: number) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.productId === productId);
-      if (existingItem) {
-        return prev.map((item) =>
-          item.productId === productId ? { ...item, quantity: item.quantity + quantity } : item
-        );
-      }
-      return [...prev, { productId, quantity }];
-    });
-    toast.success(t('products.addedToCart', { name: products.find((p) => p.id === productId)?.name || 'Product' }));
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCartItems((prev) => prev.filter((item) => item.productId !== productId));
-    toast.info(t('cart.removedFromCart', { name: products.find((p) => p.id === productId)?.name || 'Product' }));
-  };
-
-  const getCartItemCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  const sendNotification = async (recipientId: number, message: string, method: 'email' | 'whatsapp' | 'telegram') => {
+    try {
+      console.log(`Sending ${method} notification to user ${recipientId}: ${message}`);
+      toast.success(t('app.notificationSent'));
+    } catch (err) {
+      toast.error(t('app.notificationError'));
+    }
   };
 
   const toggleWishlist = (productId: number) => {
@@ -113,22 +109,14 @@ const AppContent: React.FC = () => {
   const productContextValue: ProductContextType = useMemo(
     () => ({
       products,
-      cartItems,
-      addToCart,
-      removeFromCart,
-      getCartItemCount,
+      sellers,
+      purchaseRequests,
+      submitPurchaseRequest,
+      sendNotification,
       isLoading,
       error,
     }),
-    [products, cartItems, isLoading, error]
-  );
-
-  const authContextValue: AuthContextType = useMemo(
-    () => ({
-      isAuthenticated,
-      toggleAuth,
-    }),
-    [isAuthenticated]
+    [products, sellers, purchaseRequests, isLoading, error]
   );
 
   const wishlistContextValue: WishlistContextType = useMemo(
@@ -147,14 +135,14 @@ const AppContent: React.FC = () => {
     url: window.location.origin,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${window.location.origin}/search?q={search_term_string}`,
+      target: `${window.location.origin}/products?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme } as ThemeContextType}>
-      <AuthContext.Provider value={authContextValue}>
+      <AuthContextProvider>
         <ProductContext.Provider value={productContextValue}>
           <WishlistContext.Provider value={wishlistContextValue}>
             <Router>
@@ -172,18 +160,21 @@ const AppContent: React.FC = () => {
                     <Route path="/products/:id" element={<ProductDetailPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/categories/:category" element={<ProductsPage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/purchase-requests" element={<PurchaseRequestsPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/orders" element={<OrdersPage />} />
+                    <Route path="/add-product" element={<AddProductPage />} />
+                    <Route path="/seller-dashboard" element={<SellerDashboardPage />} />
+                    <Route path="/admin-panel" element={<AdminPanelPage />} />
+                    <Route path="/wishlist" element={<WishlistPage />} />
                   </Route>
                 </Routes>
               </ErrorBoundary>
             </Router>
           </WishlistContext.Provider>
         </ProductContext.Provider>
-      </AuthContext.Provider>
+      </AuthContextProvider>
     </ThemeContext.Provider>
   );
 };

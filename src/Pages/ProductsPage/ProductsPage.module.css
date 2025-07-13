@@ -81,6 +81,7 @@
 
 /* Form Control */
 .formControl {
+  color: var(--text-color);
   min-width: 150px;
 }
 
@@ -120,8 +121,7 @@
   color: var(--text-color);
 }
 
-/* Product Grid */
-.productGrid {
+.simpleProductGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -143,8 +143,7 @@
   padding: 2rem;
 }
 
-/* Loading Spinner */
-.loadingSpinner {
+/*_loadingSpinner {
   color: var(--primary-color);
 }
 
@@ -166,6 +165,21 @@
 /* Pagination */
 .pagination {
   color: var(--primary-color);
+}
+
+/* Contact Button */
+.contactButton {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--button-border-radius);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.contactButton:hover {
+  background-color: var(--button-hover-bg);
 }
 
 /* Responsive Adjustments */

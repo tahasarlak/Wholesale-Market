@@ -241,8 +241,8 @@
   color: var(--text-color);
 }
 
-/* Add to Cart Button */
-.addToCartButton {
+/* Contact Button */
+.contactButton {
   background-color: var(--button-bg);
   color: var(--button-text);
   padding: var(--button-padding);
@@ -252,7 +252,7 @@
   text-transform: none;
 }
 
-.addToCartButton:hover {
+.contactButton:hover {
   background-color: var(--button-hover-bg);
 }
 

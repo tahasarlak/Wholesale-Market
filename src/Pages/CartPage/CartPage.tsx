@@ -3,32 +3,37 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { Box, Typography, List, ListItem, ListItemText, IconButton, Button } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-import { ProductContext } from '../../context/ProductContext';
+import { ProductContext, ProductContextType, PurchaseRequest, Product } from '../../context/ProductContext';
 import { motion } from 'framer-motion';
 import styles from './CartPage.module.css';
 
 const CartPage: React.FC = () => {
   const { t } = useTranslation();
-  const { cartItems, products, removeFromCart, addToCart } = useContext(ProductContext);
+  const { purchaseRequests, products } = useContext(ProductContext) as ProductContextType;
+
+  const handleRemoveRequest = (requestId: number) => {
+    // Simulate removing a purchase request (in a real app, this would update the backend)
+    console.log(`Removing purchase request with ID: ${requestId}`);
+  };
 
   return (
     <Box className={styles.cartPage}>
       <Helmet>
-        <title>{t('cart.title')}</title>
-        <meta name="description" content={t('cart.description')} />
+        <title>{t('purchaseRequests.title')}</title>
+        <meta name="description" content={t('purchaseRequests.description')} />
       </Helmet>
       <Typography variant="h4" className={styles.title}>
-        {t('cart.title')}
+        {t('purchaseRequests.title')}
       </Typography>
-      {cartItems.length === 0 ? (
-        <Typography className={styles.emptyMessage}>{t('cart.empty')}</Typography>
+      {purchaseRequests.length === 0 ? (
+        <Typography className={styles.emptyMessage}>{t('purchaseRequests.noRequests')}</Typography>
       ) : (
         <List>
-          {cartItems.map((item) => {
-            const product = products.find((p) => p.id === item.productId);
+          {purchaseRequests.map((request: PurchaseRequest) => {
+            const product: Product | undefined = products.find((p: Product) => p.id === request.productId);
             return (
               <motion.div
-                key={item.productId}
+                key={request.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -39,7 +44,7 @@ const CartPage: React.FC = () => {
                     <IconButton
                       edge="end"
                       aria-label={t('cart.removeAria', { name: product?.name || 'Product' })}
-                      onClick={() => removeFromCart(item.productId)}
+                      onClick={() => handleRemoveRequest(request.id)}
                     >
                       <Delete />
                     </IconButton>
@@ -48,17 +53,13 @@ const CartPage: React.FC = () => {
                   <ListItemText
                     primary={product?.name || t('products.unknownProduct')}
                     secondary={t('cart.itemDetails', {
-                      quantity: item.quantity,
+                      quantity: request.quantity,
                       price: product?.price || 0,
-                      total: (product?.price ? parseFloat(product.price.replace('$', '')) : 0) * item.quantity,
+                      total: product?.price
+                        ? (parseFloat(product.price.replace('$', '')) * request.quantity).toFixed(2)
+                        : 0,
                     })}
                   />
-                  <Button
-                    onClick={() => addToCart(item.productId, 1)}
-                    aria-label={t('cart.addMoreAria', { name: product?.name || 'Product' })}
-                  >
-                    {t('cart.addMore')}
-                  </Button>
                 </ListItem>
               </motion.div>
             );
@@ -67,7 +68,7 @@ const CartPage: React.FC = () => {
       )}
       <Button
         variant="contained"
-        disabled={cartItems.length === 0}
+        disabled={purchaseRequests.length === 0}
         className={styles.checkoutButton}
         onClick={() => alert(t('cart.checkout'))}
       >

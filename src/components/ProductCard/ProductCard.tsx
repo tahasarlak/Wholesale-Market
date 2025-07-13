@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Card, CardMedia, CardContent, Typography, Button, Rating, Chip } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Button, Rating, Chip, Box } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { Product } from '../../context/ProductContext';
@@ -10,16 +10,16 @@ import styles from './ProductCard.module.css';
 interface ProductCardProps {
   product: Product;
   cardVariants: Variants;
-  handleAddToCart: (productId: number, productName: string) => void;
+  handlePurchaseRequest?: (productId: number, productName: string, quantity?: number, proposedPrice?: string) => void;
+  sellerName?: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handleAddToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handlePurchaseRequest, sellerName }) => {
   const { t } = useTranslation();
   const { isDarkMode } = useContext(ThemeContext) as ThemeContextType;
   const shouldReduceMotion = useReducedMotion();
   const [imageLoaded, setImageLoaded] = useState<boolean | null>(null);
 
-  // Check image loading status
   useEffect(() => {
     const img = new Image();
     const imageSrc = product.images && product.images.length > 0 ? product.images[0] : product.image;
@@ -28,7 +28,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handle
     img.onerror = () => setImageLoaded(false);
   }, [product.images, product.image]);
 
-  // Animation variants for buttons
   const buttonVariants: Variants = {
     rest: { scale: 1 },
     hover: {
@@ -65,8 +64,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handle
           <Typography variant="h6" component="h3" className={styles.cardTitle}>
             {product.name}
           </Typography>
+          {sellerName && (
+            <Typography variant="caption" className={styles.sellerName}>
+              {t('product.seller')}: {sellerName}
+            </Typography>
+          )}
           <Typography variant="body2" className={styles.cardDescription}>
-            {product.description?.substring(0, 50) || t('product.noDescription')}...
+            {product.shortDescription || product.description?.substring(0, 50) || t('product.noDescription')}...
           </Typography>
           <Typography variant="body2" className={styles.cardPrice}>
             {product.price}
@@ -91,14 +95,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handle
               </Typography>
             </div>
           )}
-          {product.bulkPricing && (
+          {product.isNew && (
             <Chip
-              label={t('product.bulkAvailable')}
-              color="primary"
+              label={t('product.new')}
+              color="success"
               size="small"
-              className={styles.bulkChip}
-              aria-label={t('product.bulkAvailableAria')}
+              className={styles.statusChip}
             />
+          )}
+          {product.isOnSale && (
+            <Chip
+              label={t('product.onSale')}
+              color="error"
+              size="small"
+              className={styles.statusChip}
+            />
+          )}
+          {product.condition && (
+            <Chip
+              label={t(`product.condition.${product.condition}`)}
+              size="small"
+              className={styles.statusChip}
+            />
+          )}
+          {product.tags && product.tags.length > 0 && (
+            <Box className={styles.tagsContainer}>
+              {product.tags.slice(0, 3).map((tag, index) => (
+                <Chip key={index} label={tag} size="small" className={styles.tagChip} />
+              ))}
+            </Box>
           )}
           <div className={styles.buttonContainer}>
             <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
@@ -112,16 +137,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, cardVariants, handle
                 {t('product.viewDetails')}
               </Button>
             </motion.div>
-            <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
-              <Button
-                variant="outlined"
-                onClick={() => handleAddToCart(product.id, product.name)}
-                className={styles.addToCartButton}
-                aria-label={t('product.addToCartAria', { name: product.name })}
-              >
-                {t('product.addToCart')}
-              </Button>
-            </motion.div>
+            {handlePurchaseRequest && (
+              <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
+                <Button
+                  variant="outlined"
+                  onClick={() => handlePurchaseRequest(product.id, product.name, product.minPurchaseQuantity)}
+                  className={styles.addToCartButton}
+                  aria-label={t('product.purchaseRequestAria', { name: product.name })}
+                  disabled={product.stockQuantity === 0}
+                >
+                  {t('product.purchaseRequest')}
+                </Button>
+              </motion.div>
+            )}
           </div>
           {imageLoaded === false && (
             <Typography

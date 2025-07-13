@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Card, Typography, Box, Tabs, Tab } from '@mui/material';
+import React, { useContext, useState, useMemo } from 'react';
+import { Box, Typography, Tabs, Tab } from '@mui/material';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { ProductContext, ProductContextType } from '../../context/ProductContext';
+import { AuthContext, AuthContextType, UserRole } from '../../context/AuthContext';
 import ProductCard from '../ProductCard/ProductCard';
 import styles from './FeaturedProducts.module.css';
 
 const FeaturedProducts: React.FC = () => {
   const { t } = useTranslation();
-  const { products, isLoading, error, addToCart } = useContext(ProductContext) as ProductContextType;
+  const { products, isLoading, error, submitPurchaseRequest } = useContext(ProductContext) as ProductContextType;
+  const { user, switchRole } = useContext(AuthContext) as AuthContextType;
   const shouldReduceMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -26,6 +28,29 @@ const FeaturedProducts: React.FC = () => {
       : products.filter((product) => product.category === selectedCategory);
   }, [products, selectedCategory]);
 
+  // Handle purchase request
+  const handlePurchaseRequest = async (
+    productId: number,
+    productName: string,
+    quantity: number = 1,
+    proposedPrice?: string
+  ) => {
+    if (!user) {
+      toast.error(t('products.pleaseLogin'));
+      return;
+    }
+    if (user.roles.includes(UserRole.SELLER) && user.activeRole !== UserRole.BUYER) {
+      toast.info(t('products.switchToBuyer'));
+      switchRole(UserRole.BUYER);
+    }
+    try {
+      await submitPurchaseRequest(productId, quantity, { email: user.email }, proposedPrice);
+      toast.success(t('products.purchaseRequestSent', { name: productName, quantity }));
+    } catch (err) {
+      toast.error(t('products.purchaseRequestFailed'));
+    }
+  };
+
   // Animation variants for section
   const sectionVariants: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 50 },
@@ -34,7 +59,7 @@ const FeaturedProducts: React.FC = () => {
       y: 0,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.8,
-        ease: 'easeOut' as const,
+        ease: 'easeOut',
         delay: 0.2,
       },
     },
@@ -47,14 +72,8 @@ const FeaturedProducts: React.FC = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: shouldReduceMotion ? 0 : 0.5, ease: 'easeOut' as const, staggerChildren: 0.1 },
+      transition: { duration: shouldReduceMotion ? 0 : 0.5, ease: 'easeOut', staggerChildren: 0.1 },
     },
-  };
-
-  // Handle add to cart
-  const handleAddToCart = (productId: number, productName: string) => {
-    addToCart(productId, 1); // Default quantity of 1
-    toast.success(t('product.addedToCart', { name: productName, quantity: 1 }));
   };
 
   if (isLoading) {
@@ -71,7 +90,7 @@ const FeaturedProducts: React.FC = () => {
     return (
       <Box className={styles.errorContainer}>
         <Typography variant="h6" align="center" className={styles.errorMessage}>
-          {t('products.error.noProductContext')}
+          {error}
         </Typography>
       </Box>
     );
@@ -133,7 +152,7 @@ const FeaturedProducts: React.FC = () => {
             <ProductCard
               product={product}
               cardVariants={cardVariants}
-              handleAddToCart={handleAddToCart}
+              handlePurchaseRequest={handlePurchaseRequest}
             />
           </motion.div>
         ))}

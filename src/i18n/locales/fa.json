@@ -1,31 +1,40 @@
 {
   "header": {
-    "home": "خانه",
+    "home": "صفحه اصلی",
     "products": "محصولات",
     "orders": "سفارش‌ها",
-    "contact": "تماس",
+    "contact": "تماس با ما",
     "profile": "پروفایل",
     "login": "ورود",
     "logout": "خروج",
     "searchPlaceholder": "جستجوی محصولات...",
     "searchAria": "جستجوی محصولات",
     "search": "جستجو",
-    "cartAria": "سبد خرید با {count} مورد",
+    "purchaseRequestsAria": "مشاهده درخواست‌های خرید ({{count}})",
+    "wishlistAria": "مشاهده لیست علاقه‌مندی‌ها ({{count}})",
     "lightMode": "تغییر به حالت روشن",
     "darkMode": "تغییر به حالت تیره",
     "menu": "منو",
     "language": "تغییر زبان",
     "selectLanguage": "انتخاب زبان",
-    "avatarError": "تصویر بارگذاری نشد"
+    "avatarError": "بارگذاری تصویر با خطا مواجه شد",
+    "addProduct": "افزودن محصول",
+    "sellerDashboard": "داشبورد فروشنده",
+    "adminPanel": "پنل مدیریت",
+    "role": {
+      "buyer": "خریدار",
+      "seller": "فروشنده",
+      "admin": "مدیر"
+    }
   },
   "products": {
-    "title": "محصولات ویژه",
-    "description": "طیف گسترده‌ای از محصولات عمده‌فروشی را که برای نیازهای کسب‌وکار شما طراحی شده‌اند، کاوش کنید.",
-    "keywords": "عمده‌فروشی, محصولات, الکترونیک, پوشاک, مبلمان, کتاب, لوازم جانبی",
+    "title": "محصولات برجسته",
+    "description": "طیف گسترده‌ای از محصولات عمده‌فروشی متناسب با نیازهای کسب‌وکار شما را کاوش کنید.",
+    "keywords": "عمده‌فروشی، محصولات، الکترونیک، پوشاک، مبلمان، کتاب، لوازم جانبی",
     "ariaLabel": "صفحه محصولات",
     "breadcrumbAria": "ناوبری بردکرامب",
     "categoryAria": "تب‌های فیلتر دسته‌بندی محصولات",
-    "home": "خانه",
+    "home": "صفحه اصلی",
     "search": "جستجوی محصولات",
     "searchAria": "جستجوی محصولات بر اساس نام",
     "category": "دسته‌بندی",
@@ -36,12 +45,15 @@
     "loading": "در حال بارگذاری محصولات",
     "noProducts": "هیچ محصولی با معیارهای شما یافت نشد.",
     "pagination": "صفحه‌بندی محصولات",
-    "addedToCart": "{name} به سبد خرید اضافه شد!",
-    "error": {
-      "noProductContext": "زمینه محصول در دسترس نیست.",
-      "urlParams": "خطا در بارگذاری پارامترهای جستجو.",
-      "addToCart": "افزودن محصول به سبد خرید ناموفق بود."
-    },
+    "pleaseLogin": "لطفاً برای انجام این عملیات وارد شوید",
+    "switchToBuyer": "تغییر به نقش خریدار برای درخواست خرید",
+    "sellerRoleRequired": "نقش فروشنده برای افزودن محصولات لازم است",
+    "sellerNotVerified": "حساب فروشنده شما تأیید نشده است",
+    "addProduct": "افزودن محصول جدید",
+    "purchaseRequestSent": "درخواست خرید برای {{name}} (تعداد: {{quantity}}) با موفقیت ارسال شد",
+    "purchaseRequestFailed": "ارسال درخواست خرید با خطا مواجه شد",
+    "productAdded": "محصول با موفقیت اضافه شد",
+    "productAddFailed": "افزودن محصول با خطا مواجه شد",
     "categories": {
       "all": "همه",
       "electronics": "الکترونیک",
@@ -59,31 +71,57 @@
     }
   },
   "product": {
-    "home": "خانه",
+    "home": "صفحه اصلی",
     "products": "محصولات",
     "notFound": "محصول یافت نشد",
     "loading": "در حال بارگذاری جزئیات محصول",
     "ariaLabel": "جزئیات برای {name}",
     "breadcrumbAria": "ناوبری بردکرامب",
-    "noDescription": "توضیحات در دسترس نیست.",
-    "imageError": "تصویر محصول بارگذاری نشد",
+    "noDescription": "توضیحاتی در دسترس نیست.",
+    "imageError": "بارگذاری تصویر محصول با خطا مواجه شد",
     "category": "دسته‌بندی",
     "new": "جدید",
-    "onSale": "در حال فروش",
-    "inStock": "موجود ({count})",
+    "onSale": "در حال فروش ویژه",
+    "inStock": "موجود در انبار ({count})",
     "outOfStock": "ناموجود",
     "bulkPricing": "قیمت‌گذاری عمده",
     "bulkPrice": "از {price}",
-    "bulkPricingTier": "{minQuantity}+ واحد: {price} برای هر کدام",
-    "bulkAvailable": "قیمت‌گذاری عمده در دسترس است",
-    "bulkAvailableAria": "قیمت‌گذاری عمده برای این محصول در دسترس است",
+    "bulkPricingTier": "{minQuantity}+ واحد: {price} هر واحد",
     "variants": "انواع",
     "unknownVariant": "نوع ناشناخته",
-    "variantSelected": "نوع انتخاب شده: {variant}",
+    "selectVariant": "انتخاب نوع",
     "quantity": "تعداد",
     "quantityAria": "انتخاب تعداد برای {name}",
-    "addToCart": "افزودن به سبد خرید",
-    "addToCartAria": "افزودن {quantity} {name} به سبد خرید",
+    "quantityRange": "تعداد باید بین {min} و {max} باشد",
+    "contactWhatsApp": "تماس از طریق واتس‌اپ",
+    "contactWhatsAppAria": "تماس با تأمین‌کننده از طریق واتس‌اپ برای {name} با تعداد {quantity}",
+    "contactTelegram": "تماس از طریق تلگرام",
+    "contactTelegramAria": "تماس با تأمین‌کننده از طریق تلگرام برای {name} با تعداد {quantity}",
+    "contactEmail": "تماس از طریق ایمیل",
+    "contactEmailAria": "تماس با تأمین‌کننده از طریق ایمیل برای {name} با تعداد {quantity}",
+    "purchaseRequest": "درخواست خرید",
+    "purchaseRequestAria": "درخواست خرید برای {name}",
+    "proposedPrice": "قیمت پیشنهادی",
+    "proposedPriceAria": "وارد کردن قیمت پیشنهادی برای {name}",
+    "seller": "فروشنده",
+    "unknownSeller": "فروشنده ناشناخته",
+    "sku": "کد محصول",
+    "brand": "برند",
+    "material": "جنس",
+    "dimensions": "ابعاد",
+    "weight": "وزن",
+    "warranty": "گارانتی",
+    "shippingDetails": "جزئیات ارسال",
+    "shipsFrom": "ارسال از",
+    "estimatedDelivery": "زمان تخمینی تحویل",
+    "shippingCost": "هزینه ارسال",
+    "returnPolicy": "سیاست بازگشت",
+    "tags": "برچسب‌ها",
+    "condition": {
+      "new": "جدید",
+      "used": "کارکرده",
+      "refurbished": "بازسازی‌شده"
+    },
     "viewDetails": "مشاهده جزئیات",
     "viewDetailsAria": "مشاهده جزئیات برای {name}",
     "prevImage": "تصویر قبلی",
@@ -93,7 +131,6 @@
     "ratingAria": "امتیاز {rating} ستاره",
     "reviews": "نظرات",
     "relatedProducts": "محصولات مرتبط",
-    "addedToCart": "افزودن {quantity} {name} به سبد خرید",
     "addedToWishlist": "به لیست علاقه‌مندی‌ها اضافه شد",
     "removeFromWishlist": "حذف از لیست علاقه‌مندی‌ها",
     "removedFromWishlist": "از لیست علاقه‌مندی‌ها حذف شد"
@@ -101,14 +138,18 @@
   "testimonials": {
     "title": "نظرات مشتریان ما",
     "johnDoe": "معاملات شگفت‌انگیز و تحویل سریع! بازار عمده‌فروشی کسب‌وکار من را متحول کرده است.",
-    "janeSmith": "کیفیت محصولات فوق‌العاده است و خدمات مشتریان بی‌نظیر است!",
+    "janeSmith": "کیفیت محصولات فوق‌العاده است و خدمات مشتری بی‌نظیر است!",
     "mikeJohnson": "تنوع محصولات موجود را دوست دارم. این یک فروشگاه کامل برای تمام نیازهای من است.",
-    "avatarError": "تصویر بارگذاری نشد"
+    "avatarError": "بارگذاری تصویر با خطا مواجه شد"
   },
   "app": {
     "title": "بازار عمده‌فروشی - بهترین معاملات آنلاین",
-    "description": "فروشگاه یک‌جا برای محصولات عمده‌فروشی با قیمت‌های بی‌نظیر.",
-    "loading": "در حال بارگذاری برنامه"
+    "description": "فروشگاه یک‌جای شما برای محصولات عمده‌فروشی با قیمت‌های بی‌نظیر.",
+    "loading": "در حال بارگذاری برنامه",
+    "purchaseRequestSubmitted": "درخواست خرید با موفقیت ارسال شد",
+    "purchaseRequestError": "ارسال درخواست خرید با خطا مواجه شد",
+    "notificationSent": "اعلان با موفقیت ارسال شد",
+    "notificationError": "ارسال اعلان با خطا مواجه شد"
   },
   "auth": {
     "loggedIn": "با موفقیت وارد شدید",
@@ -116,45 +157,91 @@
   },
   "wishlist": {
     "added": "به لیست علاقه‌مندی‌ها اضافه شد",
-    "removed": "از لیست علاقه‌مندی‌ها حذف شد"
+    "removed": "از لیست علاقه‌مندی‌ها حذف شد",
+    "title": "لیست علاقه‌مندی‌های شما",
+    "noItems": "لیست علاقه‌مندی‌های شما خالی است"
   },
   "layout": {
     "mainContent": "محتوای اصلی",
-    "scrollToTop": "رفتن به بالا"
+    "scrollToTop": "رفتن به بالای صفحه"
   },
   "login": {
     "title": "ورود",
-    "prompt": "برای دسترسی به حساب خود و مدیریت سفارش‌هایتان وارد شوید.",
-    "alreadyLoggedIn": "شما قبلاً وارد شده‌اید.",
+    "prompt": "برای دسترسی به حساب خود و مدیریت سفارشات وارد شوید.",
+    "alreadyLoggedIn": "شما قبلاً به عنوان {{name}} وارد شده‌اید.",
     "login": "ورود",
-    "logout": "خروج"
+    "logout": "خروج",
+    "fillAllFields": "لطفاً تمام فیلدهای مورد نیاز را پر کنید",
+    "success": "با موفقیت وارد شدید",
+    "failed": "ورود ناموفق بود",
+    "sellerRegistration": "ثبت‌نام فروشنده",
+    "sellerRegistrationSubmitted": "ثبت‌نام فروشنده ارسال شد، در انتظار تأیید",
+    "sellerRegistrationFailed": "ثبت‌نام به عنوان فروشنده با خطا مواجه شد",
+    "email": "ایمیل",
+    "emailAria": "ایمیل خود را وارد کنید",
+    "password": "رمز عبور",
+    "passwordAria": "رمز عبور خود را وارد کنید",
+    "selectRole": "انتخاب نقش",
+    "role": {
+      "buyer": "خریدار",
+      "seller": "فروشنده",
+      "admin": "مدیر"
+    },
+    "businessName": "نام کسب‌وکار",
+    "whatsappNumber": "شماره واتس‌اپ",
+    "telegramUsername": "نام کاربری تلگرام",
+    "preferredCommunication": "روش ارتباطی ترجیحی",
+    "comm": {
+      "email": "ایمیل",
+      "whatsapp": "واتس‌اپ",
+      "telegram": "تلگرام"
+    },
+    "registerSeller": "ثبت‌نام به عنوان فروشنده",
+    "currentRole": "نقش کنونی"
   },
   "profile": {
     "title": "پروفایل شما",
     "description": "جزئیات حساب و تنظیمات خود را مدیریت کنید.",
-    "placeholder": "مدیریت پروفایل به زودی ارائه می‌شود."
+    "placeholder": "مدیریت پروفایل به زودی در دسترس خواهد بود."
   },
   "orders": {
     "title": "سفارش‌های شما",
-    "description": "تاریخچه سفارش‌های خود را مشاهده کرده و خریدهای خود را پیگیری کنید.",
-    "ariaLabel": "صفحه تاریخچه سفارش‌ها",
-    "notAuthenticated": "لطفاً برای مشاهده سفارش‌های خود وارد شوید.",
+    "description": "تاریخچه سفارشات خود را مشاهده کرده و خریدهای خود را پیگیری کنید.",
+    "ariaLabel": "صفحه تاریخچه سفارشات",
+    "notAuthenticated": "لطفاً برای مشاهده سفارشات خود وارد شوید.",
     "loginButton": "ورود",
     "noOrders": "شما هنوز هیچ سفارشی ندارید.",
-    "loading": "در حال بارگذاری سفارش‌ها",
+    "loading": "در حال بارگذاری سفارشات",
     "order": "سفارش",
     "date": "تاریخ",
     "total": "مجموع",
     "status": "وضعیت",
-    "items": "موارد",
+    "items": "اقلام",
     "quantity": "تعداد",
     "unknownProduct": "محصول ناشناخته",
     "viewDetails": "مشاهده جزئیات"
   },
-  "errorBoundary": {
-    "title": "مشکلی پیش آمد",
-    "message": "خطای غیرمنتظره‌ای رخ داد. لطفاً دوباره تلاش کنید یا به صفحه اصلی بازگردید.",
-    "retry": "تلاش مجدد",
-    "backToHome": "بازگشت به خانه"
+  "sellerDashboard": {
+    "title": "داشبورد فروشنده",
+    "products": "محصولات شما",
+    "purchaseRequests": "درخواست‌های خرید",
+    "noProducts": "شما هیچ محصولی ثبت نکرده‌اید.",
+    "noRequests": "هیچ درخواست خریدی دریافت نشده است."
+  },
+  "adminPanel": {
+    "title": "پنل مدیریت",
+    "pendingSellers": "تأییدهای در انتظار فروشندگان",
+    "purchaseRequests": "همه درخواست‌های خرید",
+    "noPendingSellers": "هیچ فروشنده‌ای در انتظار تأیید نیست.",
+    "noRequests": "هیچ درخواست خریدی یافت نشد.",
+    "approve": "تأیید فروشنده",
+    "approveSeller": "تأیید فروشنده {{name}}",
+    "sellerApproved": "فروشنده با موفقیت تأیید شد",
+    "sellerApprovalFailed": "تأیید فروشنده با خطا مواجه شد",
+    "adminRoleRequired": "نقش مدیر برای دسترسی به این صفحه لازم است"
+  },
+  "purchaseRequests": {
+    "title": "درخواست‌های خرید شما",
+    "noRequests": "شما هیچ درخواست خریدی ندارید."
   }
 }

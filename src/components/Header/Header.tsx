@@ -16,14 +16,18 @@ import {
   Modal,
   Box,
   ListItemIcon,
+  FormControl,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faSearch, faBars, faSun, faMoon, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBars, faSun, faMoon, faGlobe, faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
-import { AuthContext, AuthContextType } from '../../context/AuthContext';
+import { AuthContext, AuthContextType, UserRole } from '../../context/AuthContext';
 import { ThemeContext, ThemeContextType } from '../../context/ThemeContext';
 import { ProductContext, ProductContextType } from '../../context/ProductContext';
+import { WishlistContext, WishlistContextType } from '../../context/WishlistContext';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 
@@ -36,9 +40,10 @@ interface LanguageOption {
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { isAuthenticated, toggleAuth } = useContext(AuthContext) as AuthContextType;
+  const { isAuthenticated, user, logout, switchRole } = useContext(AuthContext) as AuthContextType;
   const { isDarkMode, toggleTheme } = useContext(ThemeContext) as ThemeContextType;
-  const { cartItems } = useContext(ProductContext) as ProductContextType;
+  const { purchaseRequests } = useContext(ProductContext) as ProductContextType;
+  const { wishlist } = useContext(WishlistContext) as WishlistContextType;
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [languageModalOpen, setLanguageModalOpen] = useState<boolean>(false);
@@ -52,7 +57,6 @@ const Header: React.FC = () => {
     { code: 'fa', name: 'فارسی', flag: 'https://flagcdn.com/w20/ir.png' },
   ];
 
-  // Check flag image loading status
   useEffect(() => {
     const status: Record<string, boolean> = {};
     languageOptions.forEach((lang) => {
@@ -65,7 +69,7 @@ const Header: React.FC = () => {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      navigate(`/products?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
   };
@@ -89,7 +93,13 @@ const Header: React.FC = () => {
     toggleLanguageModal();
   };
 
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const handleRoleSwitch = (role: UserRole) => {
+    switchRole(role);
+    toggleDrawer();
+  };
+
+  const purchaseRequestCount = purchaseRequests.length;
+  const wishlistCount = wishlist.length;
 
   const navLinks = [
     { to: '/', label: t('header.home') },
@@ -97,9 +107,14 @@ const Header: React.FC = () => {
     { to: '/orders', label: t('header.orders') },
     { to: '/contact', label: t('header.contact') },
     { to: '/profile', label: t('header.profile') },
+    ...(isAuthenticated && user?.roles.includes(UserRole.SELLER) && user.sellerInfo?.verificationStatus === 'verified'
+      ? [{ to: '/add-product', label: t('header.addProduct') }, { to: '/seller-dashboard', label: t('header.sellerDashboard') }]
+      : []),
+    ...(isAuthenticated && user?.roles.includes(UserRole.ADMIN)
+      ? [{ to: '/admin-panel', label: t('header.adminPanel') }]
+      : []),
   ];
 
-  // Animation variants for header
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : -20 },
     visible: {
@@ -112,7 +127,6 @@ const Header: React.FC = () => {
     },
   };
 
-  // Animation variants for buttons and icons
   const buttonVariants: Variants = {
     rest: { scale: 1 },
     hover: {
@@ -154,9 +168,24 @@ const Header: React.FC = () => {
                   </Button>
                 </motion.div>
               ))}
+              {isAuthenticated && user && user.roles && user.roles.length > 1 && (
+                <FormControl variant="outlined" size="small" className={styles.roleSelect}>
+                  <Select
+                    value={user.activeRole || user.roles[0]}
+                    onChange={(e) => handleRoleSwitch(e.target.value as UserRole)}
+                    displayEmpty
+                  >
+                    {user.roles.map((role) => (
+                      <MenuItem key={role} value={role}>
+                        {t(`header.role.${role}`)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
               <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
                 <Button
-                  onClick={toggleAuth}
+                  onClick={logout}
                   className={styles.navButton}
                   aria-label={isAuthenticated ? t('header.logout') : t('header.login')}
                 >
@@ -189,12 +218,24 @@ const Header: React.FC = () => {
             <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
               <IconButton
                 component={RouterLink}
-                to="/cart"
+                to="/purchase-requests"
                 className={styles.cartIcon}
-                aria-label={t('header.cartAria', { count: cartItemCount })}
+                aria-label={t('header.purchaseRequestsAria', { count: purchaseRequestCount })}
               >
-                <Badge badgeContent={cartItemCount} className={styles.cartBadge}>
-                  <FontAwesomeIcon icon={faShoppingCart} />
+                <Badge badgeContent={purchaseRequestCount} className={styles.cartBadge}>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </Badge>
+              </IconButton>
+            </motion.div>
+            <motion.div variants={buttonVariants} initial="rest" whileHover="hover">
+              <IconButton
+                component={RouterLink}
+                to="/wishlist"
+                className={styles.wishlistIcon}
+                aria-label={t('header.wishlistAria', { count: wishlistCount })}
+              >
+                <Badge badgeContent={wishlistCount} className={styles.wishlistBadge}>
+                  <FontAwesomeIcon icon={faHeart} />
                 </Badge>
               </IconButton>
             </motion.div>
@@ -252,10 +293,27 @@ const Header: React.FC = () => {
               <ListItemText primary={link.label} />
             </ListItem>
           ))}
+          {isAuthenticated && user && user.roles && user.roles.length > 1 && (
+            <ListItem className={styles.drawerListItem}>
+              <FormControl fullWidth variant="outlined">
+                <Select
+                  value={user.activeRole || user.roles[0]}
+                  onChange={(e) => handleRoleSwitch(e.target.value as UserRole)}
+                  displayEmpty
+                >
+                  {user.roles.map((role) => (
+                    <MenuItem key={role} value={role}>
+                      {t(`header.role.${role}`)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
+          )}
           <ListItem
             button
             onClick={() => {
-              toggleAuth();
+              logout();
               toggleDrawer();
             }}
             className={styles.drawerListItem}

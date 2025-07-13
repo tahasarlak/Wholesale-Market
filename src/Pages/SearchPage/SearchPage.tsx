@@ -2,20 +2,46 @@ import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { Box, TextField, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
-import { ProductContext } from '../../context/ProductContext';
+import { ProductContext, ProductContextType, Product } from '../../context/ProductContext';
+import { AuthContext, AuthContextType, UserRole } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styles from './SearchPage.module.css';
 
 const SearchPage: React.FC = () => {
   const { t } = useTranslation();
-  const { products, addToCart } = useContext(ProductContext);
+  const { products, submitPurchaseRequest } = useContext(ProductContext) as ProductContextType;
+  const { user, switchRole } = useContext(AuthContext) as AuthContextType;
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  const filteredProducts = products.filter((product) =>
+  const filteredProducts = products.filter((product: Product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handlePurchaseRequest = async (
+    productId: number,
+    productName: string,
+    quantity: number = 1,
+    proposedPrice?: string
+  ) => {
+    if (!user) {
+      toast.error(t('products.pleaseLogin'));
+      navigate('/login');
+      return;
+    }
+    if (user.roles.includes(UserRole.SELLER) && user.activeRole !== UserRole.BUYER) {
+      toast.info(t('products.switchToBuyer'));
+      switchRole(UserRole.BUYER);
+    }
+    try {
+      await submitPurchaseRequest(productId, quantity, { email: user.email }, proposedPrice);
+      toast.success(t('products.purchaseRequestSent', { name: productName, quantity }));
+    } catch (err) {
+      toast.error(t('products.purchaseRequestFailed'));
+    }
+  };
 
   return (
     <Box className={styles.searchPage}>
@@ -38,7 +64,7 @@ const SearchPage: React.FC = () => {
         <Typography className={styles.noProductsMessage}>{t('products.noProducts')}</Typography>
       ) : (
         <List>
-          {filteredProducts.map((product) => (
+          {filteredProducts.map((product: Product) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0 }}
@@ -50,11 +76,11 @@ const SearchPage: React.FC = () => {
                 secondaryAction={
                   <Button
                     variant="contained"
-                    onClick={() => addToCart(product.id, 1)}
+                    onClick={() => handlePurchaseRequest(product.id, product.name)}
                     className={styles.addToCartButton}
-                    aria-label={t('products.addToCartAria', { name: product.name })}
+                    aria-label={t('products.purchaseRequestAria', { name: product.name })}
                   >
-                    {t('products.addToCart')}
+                    {t('product.purchaseRequest')}
                   </Button>
                 }
               >
